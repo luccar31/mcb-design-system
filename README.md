@@ -11,7 +11,7 @@ está documentado, punto por punto y con su costo, en [`docs/audit.md`](docs/aud
 
 - **21 familias de componentes**, 34 exports, cada una con sus historias por variante y por
   estado.
-- **102 custom properties** en `src/tokens/tokens.css`, con un espejo tipado en
+- **97 custom properties** en `src/tokens/tokens.css`, con un espejo tipado en
   `src/tokens/tokens.ts` para lo que tiene que llegar a JavaScript (three.js, `<canvas>`,
   SVG).
 - Contrastes calculados con la fórmula de WCAG 2.1 y mostrados **en vivo** en las historias
@@ -88,7 +88,7 @@ import '@mcb/design-system/tokens.css'
 | --- | --- |
 | `@mcb/design-system` | Los componentes, los tokens tipados y, de arrastre, el CSS |
 | `@mcb/design-system/styles.css` | La hoja completa: tokens, base y componentes |
-| `@mcb/design-system/tokens.css` | Sólo las 102 custom properties |
+| `@mcb/design-system/tokens.css` | Sólo las 97 custom properties |
 
 ## Storybook
 
@@ -125,7 +125,7 @@ la app en el 5180. Se le puede pasar `app` o `stories` para hacer una mitad sola
 
 ```
 src/
-  tokens/       tokens.css (102 propiedades), tokens.ts (espejo tipado),
+  tokens/       tokens.css (97 propiedades), tokens.ts (espejo tipado),
                 base.css, foundations.css, y las historias de Fundamentos
   components/   una carpeta por familia: .tsx, .css y .stories.tsx
   internal/     cx(), el cálculo de contraste WCAG y los datos de ejemplo
