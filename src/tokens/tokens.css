@@ -1,0 +1,155 @@
+/**
+ * MC Blueprint design tokens.
+ *
+ * Scoped to :root so a host app can override any single token. Values marked
+ * "kept" come from the app's own styles.css verbatim; see docs/audit.md for
+ * every collapse and every change.
+ */
+
+:root {
+  color-scheme: dark;
+
+  /* ── surfaces ──────────────────────────────────────────────────────── */
+  --mcb-bg: #12161c;
+  --mcb-surface: #1b212a;
+  --mcb-surface-raised: #222a35;
+  --mcb-surface-hover: #2b3543;
+  --mcb-surface-field: #141a22;
+  --mcb-surface-sunken: #10151b;
+  --mcb-surface-viewport: #1a1f27;
+  --mcb-surface-hud: #1b212ae0;
+  --mcb-surface-paper: #ffffff;
+  --mcb-scrim: #060a0ecc;
+
+  /* ── borders ───────────────────────────────────────────────────────── */
+  --mcb-border: #2e3846;
+  --mcb-border-control: #445265;
+  --mcb-border-strong: #6a7b94;
+  --mcb-border-width: 1px;
+  --mcb-border-width-thick: 2px;
+
+  /* ── text ──────────────────────────────────────────────────────────── */
+  --mcb-text: #e6eaf0;
+  --mcb-text-muted: #93a0b1;
+  /* Valid on surface / bg / sunken only — 4.19:1 on surface-raised. */
+  --mcb-text-faint: #7f8b9c;
+  --mcb-text-on-accent: #dbeaff;
+  --mcb-text-on-paper: #0f1319;
+
+  /* ── accent ────────────────────────────────────────────────────────── */
+  --mcb-accent: #6ba7ff;
+  --mcb-accent-strong: #8dbcff;
+  --mcb-accent-dim: #24405f;
+
+  /* ── status ────────────────────────────────────────────────────────── */
+  --mcb-danger: #ff6b6b;
+  --mcb-danger-text: #ffb3b3;
+  --mcb-danger-surface: #4a2226;
+  --mcb-ok: #63d19e;
+  --mcb-ok-border: #2c5f48;
+  --mcb-warn: #e2b04a;
+  --mcb-warn-text: #ffd97a;
+  --mcb-warn-surface: #4b3d12;
+
+  /* ── categorical (telemetry categories, layer legends, charts) ─────── */
+  --mcb-cat-1: #6ba7ff;
+  --mcb-cat-2: #b58cff;
+  --mcb-cat-3: #63d19e;
+  --mcb-cat-4: #e2b04a;
+  --mcb-cat-5: #4ec9c9;
+  --mcb-cat-6: #8899aa;
+  --mcb-cat-7: #d98cc0;
+  --mcb-cat-8: #ff6b6b;
+
+  /* ── brand ─────────────────────────────────────────────────────────── */
+  --mcb-brand-light: #8fd06a;
+  --mcb-brand-dark: #6aa348;
+
+  /* ── spacing — 2px base, the app's own rhythm ──────────────────────── */
+  --mcb-space-0: 0;
+  --mcb-space-2: 2px;
+  --mcb-space-4: 4px;
+  --mcb-space-6: 6px;
+  --mcb-space-8: 8px;
+  --mcb-space-10: 10px;
+  --mcb-space-12: 12px;
+  --mcb-space-16: 16px;
+  --mcb-space-20: 20px;
+  --mcb-space-24: 24px;
+  --mcb-space-32: 32px;
+  --mcb-space-40: 40px;
+
+  /* ── radii — role-based, small to large ────────────────────────────── */
+  --mcb-radius-xs: 3px;
+  --mcb-radius-sm: 6px;
+  --mcb-radius-md: 8px;
+  --mcb-radius-lg: 10px;
+  --mcb-radius-xl: 12px;
+  --mcb-radius-pill: 999px;
+
+  /* ── typography ────────────────────────────────────────────────────── */
+  --mcb-font-sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --mcb-font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --mcb-font-size-2xs: 11px;
+  --mcb-font-size-xs: 12px;
+  --mcb-font-size-sm: 13px;
+  --mcb-font-size-md: 15px;
+  --mcb-font-size-lg: 18px;
+  --mcb-font-size-xl: 22px;
+
+  --mcb-font-weight-regular: 400;
+  --mcb-font-weight-semibold: 600;
+  --mcb-font-weight-bold: 700;
+
+  --mcb-leading-tight: 1.2;
+  --mcb-leading-normal: 1.45;
+  --mcb-leading-relaxed: 1.6;
+
+  --mcb-tracking-tight: -0.01em;
+  --mcb-tracking-normal: 0;
+  --mcb-tracking-wide: 0.06em;
+
+  /* ── shadows ───────────────────────────────────────────────────────── */
+  --mcb-shadow-hud: 0 4px 14px #0007;
+  --mcb-shadow-panel: 0 18px 48px #0009;
+  --mcb-shadow-modal: 0 24px 60px #0009;
+  --mcb-shadow-inset-edge: inset 0 0 0 1px #0007;
+
+  /* ── motion ────────────────────────────────────────────────────────── */
+  --mcb-duration-fast: 120ms;
+  --mcb-duration-base: 180ms;
+  --mcb-ease: cubic-bezier(0.2, 0, 0, 1);
+  --mcb-transition-control:
+    background-color var(--mcb-duration-fast) var(--mcb-ease),
+    border-color var(--mcb-duration-fast) var(--mcb-ease),
+    color var(--mcb-duration-fast) var(--mcb-ease);
+
+  /* ── control sizes ─────────────────────────────────────────────────── */
+  --mcb-control-height-sm: 24px;
+  --mcb-control-height-md: 28px;
+  --mcb-control-height-lg: 32px;
+
+  /* ── z-index ───────────────────────────────────────────────────────── */
+  --mcb-z-viewport-overlay: 4;
+  --mcb-z-hud: 5;
+  --mcb-z-sticky: 20;
+  --mcb-z-modal: 50;
+  --mcb-z-popover: 60;
+  --mcb-z-tooltip: 70;
+
+  /* ── focus ─────────────────────────────────────────────────────────── */
+  --mcb-focus-ring-color: var(--mcb-accent);
+  --mcb-focus-ring-width: 2px;
+  --mcb-focus-ring-offset: 2px;
+
+  /* Disabled controls still say which control they are. */
+  --mcb-disabled-opacity: 0.5;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --mcb-duration-fast: 0ms;
+    --mcb-duration-base: 0ms;
+  }
+}

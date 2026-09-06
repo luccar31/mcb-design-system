@@ -1,0 +1,72 @@
+/* Storybook chrome only. Nothing here ships in dist. */
+
+.sb-canvas {
+  min-height: 100vh;
+  padding: var(--mcb-space-24);
+  background: var(--mcb-bg);
+  color: var(--mcb-text);
+  font-family: var(--mcb-font-sans);
+  font-size: var(--mcb-font-size-sm);
+  line-height: var(--mcb-leading-normal);
+}
+
+/* Story scaffolding: a labelled row of states, the way a spec sheet reads. */
+.sb-grid {
+  display: grid;
+  gap: var(--mcb-space-16);
+  grid-template-columns: max-content 1fr;
+  align-items: center;
+}
+
+.sb-grid > dt {
+  color: var(--mcb-text-muted);
+  font-size: var(--mcb-font-size-2xs);
+  text-transform: uppercase;
+  letter-spacing: var(--mcb-tracking-wide);
+  font-weight: var(--mcb-font-weight-semibold);
+}
+
+.sb-grid > dd {
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--mcb-space-8);
+  align-items: center;
+}
+
+.sb-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mcb-space-16);
+  align-items: flex-start;
+}
+
+.sb-row {
+  display: flex;
+  gap: var(--mcb-space-8);
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.sb-note {
+  color: var(--mcb-text-muted);
+  font-size: var(--mcb-font-size-xs);
+  max-width: 62ch;
+}
+
+.sb-panel-frame {
+  width: 246px;
+  background: var(--mcb-surface);
+  border: var(--mcb-border-width) solid var(--mcb-border);
+  border-radius: var(--mcb-radius-lg);
+  padding: var(--mcb-space-10);
+}
+
+.sb-viewport-frame {
+  position: relative;
+  height: 260px;
+  background:
+    linear-gradient(120deg, #2a3442 0%, #1a1f27 55%, #131820 100%);
+  border-radius: var(--mcb-radius-lg);
+  overflow: hidden;
+}

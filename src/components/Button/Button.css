@@ -1,0 +1,143 @@
+.mcb-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--mcb-space-6);
+  min-width: 0;
+  border: var(--mcb-border-width) solid var(--mcb-border-control);
+  border-radius: var(--mcb-radius-md);
+  background: var(--mcb-surface-raised);
+  color: var(--mcb-text);
+  font-family: var(--mcb-font-sans);
+  font-weight: var(--mcb-font-weight-semibold);
+  line-height: var(--mcb-leading-tight);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: var(--mcb-transition-control);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.mcb-btn--sm {
+  height: var(--mcb-control-height-sm);
+  padding: 0 var(--mcb-space-8);
+  font-size: var(--mcb-font-size-2xs);
+  border-radius: var(--mcb-radius-sm);
+}
+
+.mcb-btn--md {
+  height: var(--mcb-control-height-md);
+  padding: 0 var(--mcb-space-10);
+  font-size: var(--mcb-font-size-xs);
+}
+
+.mcb-btn--lg {
+  height: var(--mcb-control-height-lg);
+  padding: 0 var(--mcb-space-12);
+  font-size: var(--mcb-font-size-sm);
+}
+
+.mcb-btn--block {
+  display: flex;
+  width: 100%;
+}
+
+.mcb-btn__icon {
+  display: inline-flex;
+  flex: none;
+  font-size: 1.15em;
+  line-height: 1;
+}
+
+.mcb-btn__label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ── variants ────────────────────────────────────────────────────────── */
+
+.mcb-btn--ghost {
+  background: transparent;
+  border-color: transparent;
+  color: var(--mcb-text-muted);
+}
+
+.mcb-btn--primary {
+  background: var(--mcb-accent-dim);
+  border-color: var(--mcb-accent);
+  color: var(--mcb-text-on-accent);
+}
+
+/* ── states ──────────────────────────────────────────────────────────── */
+
+/* `.is-hover` / `.is-focus` exist so a story can show a state you cannot pin. */
+
+.mcb-btn:hover:not(:disabled),
+.mcb-btn.is-hover:not(:disabled) {
+  background: var(--mcb-surface-hover);
+  border-color: var(--mcb-border-strong);
+}
+
+.mcb-btn--ghost:hover:not(:disabled),
+.mcb-btn--ghost.is-hover:not(:disabled) {
+  background: var(--mcb-surface-raised);
+  border-color: var(--mcb-border-control);
+  color: var(--mcb-text);
+}
+
+.mcb-btn--primary:hover:not(:disabled),
+.mcb-btn--primary.is-hover:not(:disabled) {
+  background: #2d4f74;
+  border-color: var(--mcb-accent-strong);
+}
+
+.mcb-btn:active:not(:disabled) {
+  background: var(--mcb-surface-sunken);
+}
+
+.mcb-btn--primary:active:not(:disabled) {
+  background: var(--mcb-accent-dim);
+}
+
+.mcb-btn:focus-visible,
+.mcb-btn.is-focus {
+  outline: var(--mcb-focus-ring-width) solid var(--mcb-focus-ring-color);
+  outline-offset: var(--mcb-focus-ring-offset);
+}
+
+.mcb-btn:disabled {
+  opacity: var(--mcb-disabled-opacity);
+  cursor: not-allowed;
+}
+
+.mcb-btn.is-active {
+  background: var(--mcb-accent-dim);
+  border-color: var(--mcb-accent);
+  color: var(--mcb-text-on-accent);
+}
+
+.mcb-btn.is-active:hover:not(:disabled),
+.mcb-btn.is-active.is-hover:not(:disabled) {
+  background: #2d4f74;
+  border-color: var(--mcb-accent-strong);
+}
+
+/* ── danger tone ─────────────────────────────────────────────────────── */
+
+.mcb-btn--danger {
+  color: var(--mcb-danger-text);
+}
+
+.mcb-btn--danger.mcb-btn--ghost {
+  color: var(--mcb-text-muted);
+}
+
+.mcb-btn--danger:hover:not(:disabled),
+.mcb-btn--danger.is-hover:not(:disabled) {
+  background: var(--mcb-danger-surface);
+  border-color: var(--mcb-danger);
+  color: var(--mcb-danger-text);
+}
+
+.mcb-btn--danger:focus-visible {
+  outline-color: var(--mcb-danger);
+}
