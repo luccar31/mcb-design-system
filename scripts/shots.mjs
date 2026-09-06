@@ -35,7 +35,7 @@ const storyShots = [
   ['despues-02-fundamentos-contraste', 'fundamentos-contraste--text-on-surfaces', 980, 200],
   ['despues-03-fundamentos-tipografia', 'fundamentos-tipografía--sizes', 980, 200],
   ['despues-04-fundamentos-espaciado', 'fundamentos-espaciado--scale', 980, 200],
-  ['despues-05-button-estados', 'controles-button--all-states', 900, 200],
+  ['despues-05-button-estados', 'controles-button--all-states', 1120, 200],
   ['despues-06-button-barra', 'controles-button--toolbar', 900, 200],
   ['despues-07-iconbutton-estados', 'controles-iconbutton--all-states', 900, 200],
   ['despues-08-segmentedcontrol', 'controles-segmentedcontrol--sizes', 720, 200],
@@ -53,8 +53,9 @@ const storyShots = [
   ['despues-20-chip-tonos', 'datos-chip--all-tones', 900, 200],
   ['despues-21-callout-tonos', 'retroalimentación-callout--all-tones', 820, 200],
   ['despues-22-emptystate', 'retroalimentación-emptystate--with-action', 720, 200],
-  ['despues-23-tooltip-posiciones', 'retroalimentación-tooltip--placements', 900, 420, false],
-  ['despues-24-modal', 'superficies-modal--full-flow', 1000, 680, false],
+  ['despues-23-tooltip-posiciones', 'retroalimentación-tooltip--placements', 900, 200],
+  ['despues-24-modal', 'superficies-modal--default', 1000, 620, false],
+  ['despues-25-modal-confirmacion', 'superficies-modal--small', 900, 560, false],
 ]
 
 async function shootApp(browser) {

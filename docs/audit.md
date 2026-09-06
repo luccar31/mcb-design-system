@@ -371,7 +371,7 @@ un peso 500**: la app no lo usaba y un peso más no resuelve ningún problema me
 `4 → viewport-overlay`, `5 → hud`, `50 → modal`, `60 → popover`. Agregué `20 → sticky` y
 `70 → tooltip` porque el tooltip nuevo tiene que poder aparecer sobre un modal.
 
-### 3.6 Componentes — 84 clases a 22 primitivas
+### 3.6 Componentes — 84 clases a 21 familias (34 exports)
 
 | Primitiva | Reemplaza a |
 | --- | --- |
@@ -557,3 +557,114 @@ Y por qué. Esto es lo que le queda pendiente a quien adopte el paquete.
   Hover y foco se muestran con las clases `is-hover` / `is-focus`, que existen en el CSS
   del componente sólo para poder documentar un estado que no se puede fijar.
 - **Addon a11y:** `@storybook/addon-a11y` corre axe sobre cada historia.
+- **Compilación:** `npm run typecheck`, `npm run build` y `npm run build-storybook` pasan.
+
+---
+
+## 7. La pasada visual
+
+Todo lo anterior salió de leer el CSS de la app. Esta sección sale de **mirar el
+Storybook**: levantarlo en el 6006, recorrer las historias y medir en el DOM lo que se veía
+raro. Son cosas que la lectura del código no encontró.
+
+### 7.1 Los controles se desbordaban de su contenedor (el hallazgo grande)
+
+**Qué se veía:** en *Fila de dimensiones*, los tres campos de ancho, alto y largo se leían
+como **una sola caja** con tres números adentro. En *Barra superior de la app*, el campo del
+nombre se **encimaba** con el botón "Diseños".
+
+**Qué era.** Medido en el DOM, no a ojo:
+
+| | Contenedor | Control | Diferencia |
+| --- | --- | --- | --- |
+| Fila de dimensiones | 121 px | 143 px | +22 px, se pisaban 14 px |
+| Barra superior | 230 px | 252 px | +22 px, se pisaban 16 px |
+
+`box-sizing: border-box` estaba **una sola vez** en todo el paquete, y adentro de
+`.mcb-root *`. Ese bloque es opt-in: `base.css` dice literalmente "skip it when embedding
+primitives inside another app's styles". Con el modelo de caja por defecto del navegador, un
+`<input>` con `width: 100%` mide 100 % **más** sus 20 px de padding y 2 px de borde.
+
+Y `fullWidth` es el valor **por defecto** de `TextField` y de `Select`. O sea: los dos campos
+del sistema se desbordaban de fábrica en cualquier consumidor que no se acordara de poner
+`.mcb-root` en el `<body>`. Storybook, la vidriera del propio design system, era uno de esos
+consumidores.
+
+**Arreglo:** en `base.css`, una regla de `box-sizing` acotada al prefijo propio, fuera del
+bloque opt-in:
+
+```css
+[class*='mcb-'],
+[class*='mcb-']::before,
+[class*='mcb-']::after { box-sizing: border-box; }
+```
+
+Acotada al prefijo a propósito: el modelo de caja de la app anfitriona no se toca. Medido
+después: contenedor 121 px, control 121 px, separación 8 px.
+
+### 7.2 Las historias de "todos los estados" no dejaban comparar nada
+
+Las filas tenían distinta cantidad de columnas — `solid` mostraba cinco estados, `primary`
+tres — así que las columnas no se alineaban y no se podía leer un estado hacia abajo, que es
+lo único que esa historia tiene que hacer. En `IconButton` era peor: los botones son íconos,
+no tenían rótulo, y sin encabezados no se sabía qué estado era cada uno.
+
+Ahora las dos son una `<table>` de verdad, con encabezado de columna por estado y encabezado
+de fila por variante, las cinco columnas en todas las filas y una etiqueta real ("Guardar",
+"Borrar") en vez del nombre del estado repetido adentro del botón.
+
+Puesta la matriz completa, apareció un agujero: `.mcb-btn--danger:focus-visible` existía pero
+`.mcb-btn--danger.is-focus` no, así que el anillo rojo de foco del botón peligroso era
+**imposible de documentar** — la historia mostraba el anillo azul. `IconButton` sí tenía las
+dos. Agregado el selector que faltaba.
+
+### 7.3 El tooltip parecía un botón más
+
+`Tooltip` usaba `--mcb-surface-raised` con `--mcb-radius-md`: exactamente el fondo y el radio
+de `Button`. Al lado del control que describe, el globo se leía como un segundo botón. Pasa a
+`--mcb-surface-hud` — el token que la app ya usa para lo que flota sobre el visor — con
+`--mcb-radius-sm` y `backdrop-filter`. No hay token nuevo: cambia de familia, de "control" a
+"chrome flotante".
+
+### 7.4 Cuatro historias no mostraban lo que decían mostrar
+
+- *Tooltip → Posiciones*: los cuatro globos aparecen con hover, así que la historia se veía
+  vacía. `Tooltip` gana `defaultOpen`, que sigue la misma convención que `is-hover` /
+  `is-focus`: una manera de fijar un estado que el mouse no deja fotografiar.
+- Los botones de esa historia decían `top`, `bottom`, `left`, `right`. Texto de interfaz en
+  inglés: ahora Arriba, Abajo, Izquierda, Derecha.
+- *Modal → Flujo completo* arranca cerrado, correcto para la historia e inútil como captura.
+  Las capturas usan *Por defecto* y *Chico*.
+
+### 7.5 Dos cosas que el paquete prometía y no cumplía
+
+Aparecieron al correr por primera vez los builds de verdad, desde cero.
+
+**`exports` mentía.** El `package.json` publicaba `"./tokens.css": "./dist/tokens.css"` y el
+build no emitía ese archivo nunca. Cualquiera que hiciera
+`import '@mcb/design-system/tokens.css'` — la única manera de usar los tokens sin traerse
+los componentes — se comía un error de resolución. Un plugin de Vite lo copia ahora.
+
+**`npm run build-storybook` no funcionaba en un clon limpio.** `vite-plugin-dts` con
+`rollupTypes: true` corre también durante el build de Storybook, porque Storybook usa el
+mismo `vite.config.ts`, y falla pidiendo un `dist/index.d.ts` que todavía no existe:
+
+```
+[vite:dts] Error parsing src/api-extractor.json:
+The "mainEntryPointFilePath" path does not exist: .\dist\index.d.ts
+```
+
+Sólo pasaba si antes habías corrido `npm run build` en el mismo árbol, que es exactamente lo
+que esconde este tipo de bug. Los dos plugins que existen para armar el paquete ahora se
+declaran con `apply: (config) => Boolean(config.build?.lib)`, así que el build de Storybook
+los saltea. De paso dejó de escribir `.d.ts` sueltos en `storybook-static/`.
+
+### 7.6 Lo que miré y decidí no tocar
+
+- **El botón `danger` activo se pone azul** y pierde el tono de peligro. La matriz nueva lo
+  deja a la vista. Es correcto: activo significa seleccionado, y seleccionado es el acento en
+  todo el sistema. Un rojo "activo" competiría con el de error.
+- **La flecha ▾ del `Select` es chica y tenue.** Está en la misma jerarquía que el resto de
+  los adornos secundarios. Agrandarla la pondría por encima del valor, que es lo que importa.
+- **Los `Callout` de *Todos los tonos* no tienen el mismo ancho**: cada uno se ajusta a su
+  texto. Emparejarlos es maquetado de la historia, no del componente.

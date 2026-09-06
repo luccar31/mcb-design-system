@@ -39,18 +39,25 @@ export const WithShortcut: Story = {
 export const Placements: Story = {
   name: 'Posiciones',
   render: () => (
-    <div style={{ display: 'grid', gap: 40, gridTemplateColumns: 'repeat(2, max-content)' }}>
-      <Tooltip content="Arriba del control" placement="top">
-        <Button>top</Button>
+    <div
+      style={{
+        display: 'grid',
+        gap: '72px 120px',
+        gridTemplateColumns: 'repeat(2, max-content)',
+        padding: '32px 88px',
+      }}
+    >
+      <Tooltip content="Arriba del control" placement="top" defaultOpen>
+        <Button>Arriba</Button>
       </Tooltip>
-      <Tooltip content="Abajo del control" placement="bottom">
-        <Button>bottom</Button>
+      <Tooltip content="Abajo del control" placement="bottom" defaultOpen>
+        <Button>Abajo</Button>
       </Tooltip>
-      <Tooltip content="A la izquierda" placement="left">
-        <Button>left</Button>
+      <Tooltip content="A la izquierda" placement="left" defaultOpen>
+        <Button>Izquierda</Button>
       </Tooltip>
-      <Tooltip content="A la derecha" placement="right">
-        <Button>right</Button>
+      <Tooltip content="A la derecha" placement="right" defaultOpen>
+        <Button>Derecha</Button>
       </Tooltip>
     </div>
   ),

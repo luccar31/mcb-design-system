@@ -11,6 +11,8 @@ export interface TooltipProps {
   placement?: TooltipPlacement
   /** Hover delay in ms. Focus always opens immediately. */
   delay?: number
+  /** Starts open. For stories and tests: a hover bubble cannot be pinned. */
+  defaultOpen?: boolean
   children: ReactElement
   className?: string
 }
@@ -20,10 +22,11 @@ export function Tooltip({
   shortcut,
   placement = 'top',
   delay = 350,
+  defaultOpen = false,
   children,
   className,
 }: TooltipProps) {
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(defaultOpen)
   const timer = useRef<number>()
   const id = useId()
 

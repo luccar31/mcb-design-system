@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import { IconButton } from './IconButton'
+import { IconButton, type IconButtonProps } from './IconButton'
 
 const meta = {
   title: 'Controles/IconButton',
@@ -44,32 +44,66 @@ export const Sizes: Story = {
   ),
 }
 
+const STATES = ['Normal', 'Hover', 'Foco', 'Activo', 'Deshabilitado'] as const
+
+const VARIANTS = [
+  { row: 'Solid', icon: '🖌', label: 'Pincel', props: {} },
+  { row: 'Ghost', icon: '▲', label: 'Subir capa', props: { variant: 'ghost' } },
+  { row: 'Danger', icon: '✕', label: 'Borrar', props: { tone: 'danger' } },
+  {
+    row: 'Danger ghost',
+    icon: '✕',
+    label: 'Cerrar',
+    props: { variant: 'ghost', tone: 'danger' },
+  },
+] as const satisfies readonly {
+  row: string
+  icon: string
+  label: string
+  props: Partial<IconButtonProps>
+}[]
+
+/** The class the story adds to pin a state the mouse or keyboard would own. */
+const stateProps = (state: (typeof STATES)[number]): Partial<IconButtonProps> => {
+  if (state === 'Hover') return { className: 'is-hover' }
+  if (state === 'Foco') return { className: 'is-focus' }
+  if (state === 'Activo') return { active: true, 'aria-pressed': true }
+  if (state === 'Deshabilitado') return { disabled: true }
+  return {}
+}
+
 export const AllStates: Story = {
   name: 'Todos los estados',
   render: () => (
-    <dl className="sb-grid">
-      <dt>Solid</dt>
-      <dd>
-        <IconButton label="Normal" icon="🖌" />
-        <IconButton label="Hover" icon="🖌" className="is-hover" />
-        <IconButton label="Foco" icon="🖌" className="is-focus" />
-        <IconButton label="Activo" icon="🖌" active aria-pressed />
-        <IconButton label="Deshabilitado" icon="🖌" disabled />
-      </dd>
-      <dt>Ghost</dt>
-      <dd>
-        <IconButton variant="ghost" label="Normal" icon="▲" />
-        <IconButton variant="ghost" label="Hover" icon="▲" className="is-hover" />
-        <IconButton variant="ghost" label="Foco" icon="▲" className="is-focus" />
-        <IconButton variant="ghost" label="Deshabilitado" icon="▲" disabled />
-      </dd>
-      <dt>Danger</dt>
-      <dd>
-        <IconButton tone="danger" label="Normal" icon="✕" />
-        <IconButton tone="danger" label="Hover" icon="✕" className="is-hover" />
-        <IconButton tone="danger" variant="ghost" label="Ghost" icon="✕" />
-      </dd>
-    </dl>
+    <table className="sb-matrix">
+      <thead>
+        <tr>
+          <th />
+          {STATES.map((state) => (
+            <th key={state} scope="col">
+              {state}
+            </th>
+          ))}
+        </tr>
+      </thead>
+      <tbody>
+        {VARIANTS.map(({ row, icon, label, props }) => (
+          <tr key={row}>
+            <th scope="row">{row}</th>
+            {STATES.map((state) => (
+              <td key={state}>
+                <IconButton
+                  {...props}
+                  {...stateProps(state)}
+                  icon={icon}
+                  label={`${label} — ${state}`}
+                />
+              </td>
+            ))}
+          </tr>
+        ))}
+      </tbody>
+    </table>
   ),
 }
 

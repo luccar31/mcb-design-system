@@ -1,7 +1,18 @@
 /**
- * Optional element base. Import it when the design system owns the whole
- * document; skip it when embedding primitives inside another app's styles.
+ * Two halves. The primitives' own box model always applies. The `.mcb-root`
+ * block is opt-in: add the class when the design system owns the document.
  */
+
+/**
+ * A padded control with width:100% measures 100% *plus* its padding under the
+ * browser default, so a full-width field overflowed its column by 22px. Scoped
+ * to our own prefix: the host app's box model stays whatever it already was.
+ */
+[class*='mcb-'],
+[class*='mcb-']::before,
+[class*='mcb-']::after {
+  box-sizing: border-box;
+}
 
 .mcb-root,
 body.mcb-root {

@@ -34,6 +34,28 @@
   align-items: center;
 }
 
+/* A state matrix: same columns in every row, so a state reads down a column. */
+.sb-matrix {
+  border-collapse: separate;
+  border-spacing: var(--mcb-space-16) var(--mcb-space-10);
+  margin: calc(var(--mcb-space-16) * -1) calc(var(--mcb-space-16) * -1);
+}
+
+.sb-matrix th {
+  color: var(--mcb-text-muted);
+  font-size: var(--mcb-font-size-2xs);
+  font-weight: var(--mcb-font-weight-semibold);
+  letter-spacing: var(--mcb-tracking-wide);
+  text-transform: uppercase;
+  text-align: left;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
+.sb-matrix td {
+  vertical-align: middle;
+}
+
 .sb-stack {
   display: flex;
   flex-direction: column;

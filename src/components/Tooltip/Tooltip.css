@@ -10,9 +10,12 @@
   width: max-content;
   max-width: 240px;
   padding: var(--mcb-space-6) var(--mcb-space-8);
-  background: var(--mcb-surface-raised);
+  /* The HUD surface, not the control surface: a tooltip has to float over the
+     UI instead of reading as one more button beside the one it describes. */
+  background: var(--mcb-surface-hud);
+  backdrop-filter: blur(6px);
   border: var(--mcb-border-width) solid var(--mcb-border-strong);
-  border-radius: var(--mcb-radius-md);
+  border-radius: var(--mcb-radius-sm);
   box-shadow: var(--mcb-shadow-panel);
   color: var(--mcb-text);
   font-family: var(--mcb-font-sans);

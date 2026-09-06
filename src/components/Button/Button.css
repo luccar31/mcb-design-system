@@ -138,6 +138,7 @@
   color: var(--mcb-danger-text);
 }
 
-.mcb-btn--danger:focus-visible {
+.mcb-btn--danger:focus-visible,
+.mcb-btn--danger.is-focus {
   outline-color: var(--mcb-danger);
 }
