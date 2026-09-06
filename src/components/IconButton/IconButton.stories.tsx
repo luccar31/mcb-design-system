@@ -78,7 +78,9 @@ export const AllStates: Story = {
     <table className="sb-matrix">
       <thead>
         <tr>
-          <th />
+          <th>
+            <span className="mcb-visually-hidden">Variante</span>
+          </th>
           {STATES.map((state) => (
             <th key={state} scope="col">
               {state}

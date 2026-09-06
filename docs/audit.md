@@ -613,10 +613,30 @@ Ahora las dos son una `<table>` de verdad, con encabezado de columna por estado 
 de fila por variante, las cinco columnas en todas las filas y una etiqueta real ("Guardar",
 "Borrar") en vez del nombre del estado repetido adentro del botón.
 
-Puesta la matriz completa, apareció un agujero: `.mcb-btn--danger:focus-visible` existía pero
+Puesta la matriz completa aparecieron dos agujeros que las filas ralas tapaban.
+
+**Uno de documentación.** `.mcb-btn--danger:focus-visible` existía pero
 `.mcb-btn--danger.is-focus` no, así que el anillo rojo de foco del botón peligroso era
 **imposible de documentar** — la historia mostraba el anillo azul. `IconButton` sí tenía las
 dos. Agregado el selector que faltaba.
+
+**Uno de accesibilidad, en el CSS que se publica.** Con la casilla `danger ghost` × `activo`
+por fin dibujada, axe la marcó: texto `--mcb-text-muted` (#93a0b1) sobre el relleno
+`--mcb-accent-dim` (#24405f), **4,0:1**, por debajo del 4,5:1 de AA. La causa es orden de
+fuente, no especificidad: `.mcb-btn--danger.mcb-btn--ghost` y `.mcb-btn.is-active` valen las
+dos 0-2-0, y la del tono está más abajo en el archivo, así que le ganaba el color al estado.
+No es un problema de la historia: un botón peligroso fantasma en estado seleccionado se veía
+así en la app. Ahora el tono se corre solo cuando el botón está activo:
+
+```css
+.mcb-btn--danger.mcb-btn--ghost:not(.is-active) { color: var(--mcb-text-muted); }
+```
+
+Seleccionado le gana al tono, y el par pasa a text-on-accent sobre accent-dim: 8,73:1.
+
+Pasado axe (WCAG 2.1 A + AA) sobre **las 159 historias**, quedan dos con marcas, las dos en
+Fundamentos → Contraste: son las que muestran a propósito los pares que **no** pasan, y la
+tabla ya los rotula "no pasa". No hay ninguna otra.
 
 ### 7.3 El tooltip parecía un botón más
 

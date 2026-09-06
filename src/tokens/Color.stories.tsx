@@ -30,7 +30,7 @@ export const Surfaces: Story = {
   render: () => (
     <div className="sb-stack">
       <p className="sb-note">
-        Seis niveles, todos heredados de la app. Separan poco a propósito: en un editor
+        Siete niveles, todos heredados de la app. Separan poco a propósito: en un editor
         denso la jerarquía la llevan los bordes y el espacio, no el brillo.
       </p>
       <SwatchGrid

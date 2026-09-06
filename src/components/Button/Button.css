@@ -127,7 +127,9 @@
   color: var(--mcb-danger-text);
 }
 
-.mcb-btn--danger.mcb-btn--ghost {
+/* Same specificity as .is-active but later, so it has to step aside: muted text
+   on the accent fill is 4,0:1. Selected wins over tone. */
+.mcb-btn--danger.mcb-btn--ghost:not(.is-active) {
   color: var(--mcb-text-muted);
 }
 
