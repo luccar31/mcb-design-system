@@ -1,11 +1,26 @@
+import { copyFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 import react from '@vitejs/plugin-react'
-import { defineConfig } from 'vite'
+import { defineConfig, type Plugin } from 'vite'
 import dts from 'vite-plugin-dts'
+
+/** Ships the raw custom properties so a consumer can theme without the components. */
+function emitTokensCss(): Plugin {
+  return {
+    name: 'mcb-emit-tokens-css',
+    writeBundle() {
+      copyFileSync(
+        resolve(__dirname, 'src/tokens/tokens.css'),
+        resolve(__dirname, 'dist/tokens.css'),
+      )
+    },
+  }
+}
 
 export default defineConfig({
   plugins: [
     react(),
+    emitTokensCss(),
     dts({
       tsconfigPath: './tsconfig.build.json',
       rollupTypes: true,

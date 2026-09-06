@@ -1,6 +1,8 @@
 import { forwardRef, useId, type ReactNode, type SelectHTMLAttributes } from 'react'
 import { cx } from '../../internal/cx'
+// The .mcb-field shell is shared with TextField so both controls cannot drift.
 import '../TextField/TextField.css'
+import './Select.css'
 
 export type SelectSize = 'sm' | 'md' | 'lg'
 

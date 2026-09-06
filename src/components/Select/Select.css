@@ -1,0 +1,32 @@
+/**
+ * Only what a <select> needs on top of the shared .mcb-field shell in
+ * TextField.css. The box, sizes and states stay there so they cannot drift.
+ */
+
+.mcb-field__select-wrap {
+  position: relative;
+  display: flex;
+  min-width: 0;
+}
+
+.mcb-field__select {
+  appearance: none;
+  padding-right: var(--mcb-space-24);
+  cursor: pointer;
+}
+
+.mcb-field__select-arrow {
+  position: absolute;
+  right: var(--mcb-space-8);
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: var(--mcb-text-muted);
+  font-size: var(--mcb-font-size-2xs);
+}
+
+/* The native popup is drawn by the OS: only its colours are ours to set. */
+.mcb-field__select option {
+  background: var(--mcb-surface-raised);
+  color: var(--mcb-text);
+}

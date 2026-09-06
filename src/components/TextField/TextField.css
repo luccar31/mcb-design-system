@@ -1,3 +1,8 @@
+/**
+ * The .mcb-field shell — label, box, sizes, states, hint, error — is shared by
+ * TextField and Select. Anything specific to <select> lives in Select.css.
+ */
+
 .mcb-field {
   display: flex;
   flex-direction: column;
@@ -105,31 +110,3 @@
   line-height: var(--mcb-leading-normal);
 }
 
-/* ── select ──────────────────────────────────────────────────────────── */
-
-.mcb-field__select-wrap {
-  position: relative;
-  display: flex;
-  min-width: 0;
-}
-
-.mcb-field__select {
-  appearance: none;
-  padding-right: var(--mcb-space-24);
-  cursor: pointer;
-}
-
-.mcb-field__select-arrow {
-  position: absolute;
-  right: var(--mcb-space-8);
-  top: 50%;
-  transform: translateY(-50%);
-  pointer-events: none;
-  color: var(--mcb-text-muted);
-  font-size: var(--mcb-font-size-2xs);
-}
-
-.mcb-field__select option {
-  background: var(--mcb-surface-raised);
-  color: var(--mcb-text);
-}
