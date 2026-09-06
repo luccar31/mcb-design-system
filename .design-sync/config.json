@@ -1,0 +1,38 @@
+{
+  "pkg": "@mcb/design-system",
+  "globalName": "McbDesignSystem",
+  "projectId": "68c77d3c-cf6c-4ca6-ba4e-39e523ce2db3",
+  "shape": "storybook",
+  "storybookConfigDir": ".storybook",
+  "storybookStatic": ".design-sync/sb-reference",
+  "buildCmd": "npm run build",
+  "entry": "./dist/index.js",
+  "cssEntry": "./dist/mcb-design-system.css",
+  "tokensGlob": "dist/tokens.css",
+  "readmeHeader": ".design-sync/conventions.md",
+  "titleMap": {
+    "HUDdelvisor": "HudBar",
+    "Color": null,
+    "Espaciado": null,
+    "Tipografía": null,
+    "Radiosysombras": null,
+    "Contraste": null
+  },
+  "storyImports": {
+    "loaders": { ".css": "css" }
+  },
+  "libOverrides": {
+    "preview-gen-storybook.mjs": "Inyecta .design-sync/preview-chrome.css en cada wrapper: el DS es oscuro y su canvas vive en .storybook/storybook.css, que no viaja en dist; no puede ir en styles.css porque llegaría a todos los diseños."
+  },
+  "overrides": {
+    "Button": { "cardMode": "column" },
+    "IconButton": { "cardMode": "column" },
+    "TextField": { "cardMode": "column" },
+    "Callout": { "cardMode": "column" },
+    "Tooltip": { "cardMode": "column" },
+    "Card": { "cardMode": "column" },
+    "Panel": { "cardMode": "column" },
+    "StatusBar": { "cardMode": "column" },
+    "Modal": { "cardMode": "single", "primaryStory": "Default" }
+  }
+}

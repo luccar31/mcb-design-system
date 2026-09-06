@@ -1,0 +1,60 @@
+/**
+ * Chrome sólo para las tarjetas de preview. NO viaja a los diseños: se compila
+ * a _preview/<Name>.css, fuera del cierre de @import de styles.css.
+ *
+ * Por qué existe: este DS es oscuro y su raíz es la clase `.mcb-root`. En
+ * Storybook ese rol lo cumple el decorator `.sb-canvas` (definido en
+ * .storybook/storybook.css, chrome que no viaja en dist), y las stories además
+ * se apoyan en andamiaje `sb-row` / `sb-stack` / `sb-panel-frame` / `sb-note` /
+ * `sb-viewport-frame` / `sb-grid` / `sb-matrix`. Sin esos estilos los previews
+ * renderizan sobre blanco: los componentes con superficie propia sobreviven,
+ * pero los que heredan color del contenedor (EmptyState, Kbd, Select,
+ * ColorSwatch, ListRow) quedan con texto casi blanco sobre blanco.
+ */
+@import "../.storybook/storybook.css";
+
+/**
+ * Storybook renderiza una story por página, así que `.sb-canvas` es
+ * `min-height: 100vh`. Acá cada celda de la grilla monta su propio canvas: a
+ * 100vh por celda la tarjeta se vuelve gigante. El fondo lo pone <body>.
+ */
+/**
+ * En la grilla cada celda monta su propio canvas, y `min-height: 100vh` por
+ * celda haría la tarjeta gigantesca. El fondo lo pone <body>.
+ */
+.ds-grid .sb-canvas {
+  min-height: 0;
+}
+
+/**
+ * En modo single (las capturas `?story=` de compare, y las tarjetas con
+ * cardMode "single") la página es UNA story a sangre — exactamente lo que es
+ * una página de Storybook. Así que el canvas conserva ahí su geometría
+ * original (100vh + padding) y sólo cancelamos el padding del <body>, que se
+ * sumaría al del canvas y dejaría cada captura 24px corrida respecto de la
+ * referencia. Con esto las dos capturas quedan alineadas al pixel: una
+ * diferencia de posición pasa a ser señal real en vez de ruido de encuadre.
+ *
+ * Además le devuelve altura al canvas: sin ella, un componente enteramente
+ * `position: fixed` (Modal) colapsa a 0px y dispara [RENDER_THIN].
+ */
+.ds-single {
+  /* -24px cancela el `body{padding:24px}` que emit.mjs escribe fijo (no es un
+     token del DS, así que acá va el literal a propósito). */
+  margin: -24px;
+}
+
+/**
+ * `html` sube la especificidad a (0,0,2): el emisor escribe
+ * `body{...;background:#fff}` en un <style> inline posterior a este link, y con
+ * un selector de un solo elemento ganaría por orden de aparición.
+ */
+html body {
+  background: var(--mcb-bg);
+  color: var(--mcb-text);
+}
+
+/* El borde por defecto de la celda (#e5e7eb) es un marco brillante sobre oscuro. */
+html .ds-cell {
+  border-color: var(--mcb-border);
+}
