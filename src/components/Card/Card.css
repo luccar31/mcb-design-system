@@ -33,10 +33,15 @@
   transition: var(--mcb-transition-control);
 }
 
-.mcb-card--interactive:hover,
-.mcb-card--interactive.is-hover {
+.mcb-card--interactive:hover:not(:disabled),
+.mcb-card--interactive.is-hover:not(:disabled) {
   border-color: var(--mcb-border-strong);
   background: var(--mcb-surface-hover);
+}
+
+.mcb-card--interactive:disabled {
+  opacity: var(--mcb-disabled-opacity);
+  cursor: not-allowed;
 }
 
 .mcb-card--interactive:focus-visible,

@@ -1,0 +1,215 @@
+/* Fundamentos stories only. Not part of the shipped stylesheet. */
+
+.fx-swatches {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: var(--mcb-space-8);
+}
+
+.fx-swatch {
+  display: flex;
+  align-items: center;
+  gap: var(--mcb-space-10);
+  padding: var(--mcb-space-8);
+  background: var(--mcb-surface);
+  border: var(--mcb-border-width) solid var(--mcb-border);
+  border-radius: var(--mcb-radius-md);
+}
+
+.fx-swatch__chip {
+  width: 40px;
+  height: 40px;
+  flex: none;
+  border-radius: var(--mcb-radius-sm);
+  box-shadow: var(--mcb-shadow-inset-edge);
+}
+
+.fx-swatch__meta {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.fx-swatch__token {
+  font-family: var(--mcb-font-mono);
+  font-size: var(--mcb-font-size-xs);
+  color: var(--mcb-text);
+}
+
+.fx-swatch__value {
+  font-family: var(--mcb-font-mono);
+  font-size: var(--mcb-font-size-2xs);
+  color: var(--mcb-text-muted);
+}
+
+.fx-swatch__note {
+  font-size: var(--mcb-font-size-2xs);
+  color: var(--mcb-text-faint);
+}
+
+.fx-text-demo p {
+  margin: 0 0 var(--mcb-space-4);
+}
+
+.fx-border-demo {
+  display: flex;
+  gap: var(--mcb-space-8);
+  flex-wrap: wrap;
+}
+
+.fx-border-demo > div {
+  padding: var(--mcb-space-10) var(--mcb-space-12);
+  background: var(--mcb-surface);
+  border: var(--mcb-border-width) solid;
+  border-radius: var(--mcb-radius-md);
+  font-family: var(--mcb-font-mono);
+  font-size: var(--mcb-font-size-2xs);
+  color: var(--mcb-text-muted);
+}
+
+/* ── scales ──────────────────────────────────────────────────────────── */
+
+.fx-scale {
+  display: grid;
+  grid-template-columns: max-content max-content 1fr;
+  gap: var(--mcb-space-6) var(--mcb-space-12);
+  align-items: center;
+}
+
+.fx-scale code {
+  font-family: var(--mcb-font-mono);
+  font-size: var(--mcb-font-size-xs);
+  color: var(--mcb-text-muted);
+}
+
+.fx-scale__bar {
+  height: 14px;
+  background: var(--mcb-accent-dim);
+  border-left: var(--mcb-border-width-thick) solid var(--mcb-accent);
+  border-radius: 0 var(--mcb-radius-xs) var(--mcb-radius-xs) 0;
+}
+
+.fx-radius-row {
+  display: flex;
+  gap: var(--mcb-space-12);
+  flex-wrap: wrap;
+}
+
+.fx-radius {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--mcb-space-4);
+}
+
+.fx-radius__box {
+  width: 64px;
+  height: 64px;
+  background: var(--mcb-surface-raised);
+  border: var(--mcb-border-width) solid var(--mcb-border-control);
+}
+
+.fx-radius code {
+  font-family: var(--mcb-font-mono);
+  font-size: var(--mcb-font-size-2xs);
+  color: var(--mcb-text-muted);
+}
+
+.fx-shadow-row {
+  display: flex;
+  gap: var(--mcb-space-20);
+  flex-wrap: wrap;
+}
+
+.fx-shadow {
+  width: 160px;
+  padding: var(--mcb-space-16);
+  background: var(--mcb-surface);
+  border: var(--mcb-border-width) solid var(--mcb-border);
+  border-radius: var(--mcb-radius-lg);
+  font-family: var(--mcb-font-mono);
+  font-size: var(--mcb-font-size-2xs);
+  color: var(--mcb-text-muted);
+}
+
+/* ── contrast table ──────────────────────────────────────────────────── */
+
+.fx-contrast {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--mcb-font-size-xs);
+}
+
+.fx-contrast th,
+.fx-contrast td {
+  padding: var(--mcb-space-4) var(--mcb-space-8);
+  border-bottom: var(--mcb-border-width) solid var(--mcb-border);
+  text-align: left;
+}
+
+.fx-contrast th {
+  color: var(--mcb-text-muted);
+  font-size: var(--mcb-font-size-2xs);
+  text-transform: uppercase;
+  letter-spacing: var(--mcb-tracking-wide);
+}
+
+.fx-contrast__sample {
+  padding: var(--mcb-space-2) var(--mcb-space-8);
+  border-radius: var(--mcb-radius-xs);
+  font-weight: var(--mcb-font-weight-semibold);
+  white-space: nowrap;
+}
+
+.fx-contrast__ratio {
+  font-family: var(--mcb-font-mono);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.fx-contrast__grade--pass {
+  color: var(--mcb-ok);
+}
+
+.fx-contrast__grade--warn {
+  color: var(--mcb-warn);
+}
+
+.fx-contrast__grade--fail {
+  color: var(--mcb-danger);
+}
+
+/* ── typography ──────────────────────────────────────────────────────── */
+
+.fx-type-row {
+  display: flex;
+  align-items: baseline;
+  gap: var(--mcb-space-16);
+  padding: var(--mcb-space-6) 0;
+  border-bottom: var(--mcb-border-width) solid var(--mcb-border);
+}
+
+.fx-type-row code {
+  flex: none;
+  width: 190px;
+  font-family: var(--mcb-font-mono);
+  font-size: var(--mcb-font-size-2xs);
+  color: var(--mcb-text-muted);
+}
+
+.fx-tabular {
+  display: grid;
+  grid-template-columns: max-content max-content;
+  gap: var(--mcb-space-4) var(--mcb-space-24);
+  font-size: var(--mcb-font-size-sm);
+}
+
+.fx-tabular__on {
+  font-family: var(--mcb-font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+.fx-tabular__off {
+  font-family: var(--mcb-font-sans);
+  font-variant-numeric: normal;
+}
