@@ -27,13 +27,53 @@ Requiere Node 24 y React 18 o 19 (`react` y `react-dom` son peer dependencies).
 npm install
 ```
 
-El paquete todavía no se publica. Para consumirlo desde la app, compilarlo y apuntar a la
-carpeta:
+El paquete todavía no se publica.
+
+### Consumirlo sin instalar nada
+
+`dist/` es autocontenido: sus únicos imports externos son `react` y `react/jsx-runtime`,
+que el consumidor ya tiene. No arrastra dependencias propias. Por eso **no hace falta
+instalarlo** — alcanza con apuntar el bundler y el typechecker a la carpeta construida.
+
+Esto no es una comodidad: MC Blueprint comparte su `node_modules` por junction entre
+worktrees y tiene prohibido correr `npm install`, así que un `file:` o un workspace link
+no son opciones ahí.
 
 ```bash
-npm run build          # deja dist/ listo
-npm install ../mcb-design-system   # desde el repo de la app
+npm run build          # deja dist/ listo — hacelo en ESTE repo
 ```
+
+En el repo consumidor, dos archivos:
+
+```ts
+// vite.config.ts
+resolve: {
+  alias: {
+    '@mcb/design-system': '../../../mcb-design-system/dist/index.js',
+    '@mcb/design-system/styles.css': '../../../mcb-design-system/dist/mcb-design-system.css',
+    '@mcb/design-system/tokens.css': '../../../mcb-design-system/dist/tokens.css',
+  },
+},
+// Vite bloquea por defecto lo que está fuera de la raíz del proyecto.
+server: { fs: { allow: ['..', '../../../mcb-design-system'] } },
+```
+
+```jsonc
+// tsconfig.json
+"compilerOptions": {
+  "baseUrl": ".",
+  "paths": { "@mcb/design-system": ["../../../mcb-design-system/dist/index.d.ts"] }
+}
+```
+
+La ruta relativa depende de dónde esté cada repo; la de arriba es la de MC Blueprint
+(`.../OneDrive/Desktop/minecraft-3d-designer` → `C:/Users/lucas/mcb-design-system`).
+
+`react` y `react-dom` quedan externos en el bundle, así que se resuelven contra los del
+consumidor: no hay dos Reacts.
+
+**Cuando este repo publique de verdad, todo esto se borra y vuelve a ser un `dependencies`
+normal.** Es un puente, no una arquitectura.
 
 ## Uso
 
@@ -63,8 +103,21 @@ Los estilos base del documento son opcionales y se piden con una clase:
 <body class="mcb-root">
 ```
 
-Sin `.mcb-root` los componentes se ven igual — su modelo de caja y su tipografía viajan con
-ellos. La clase sólo agrega el fondo, el color y la fuente del documento entero.
+**No es opcional en la práctica, y el modo de fallo es engañoso.** Medido renderizando los
+21 componentes fuera de `.mcb-root`, sobre fondo claro:
+
+- Los que traen superficie propia (`Card`, `Panel`, `Callout`, `DataTable`, `Modal`) se ven
+  bien. Eso es justamente lo que engaña: da la sensación de que todo funciona.
+- Los que heredan el color del contenedor (`EmptyState`, `Kbd`, `Select`, `ColorSwatch`,
+  `ListRow`) quedan con **texto casi blanco sobre blanco** — `--mcb-text` es `#e6eaf0`,
+  pensado para superficies oscuras. Ilegibles, y sin ningún error en consola.
+
+Lo que sí viaja con cada componente es su modelo de caja (la regla `box-sizing` está
+acotada al prefijo `mcb-`, deliberadamente fuera del bloque opt-in) y su estilo propio.
+Lo que aporta `.mcb-root` es el fondo, el color de texto y la tipografía del documento —
+y sin eso, todo lo que herede color está mal.
+
+Ponela una sola vez, lo más arriba posible.
 
 ### Tokens
 
