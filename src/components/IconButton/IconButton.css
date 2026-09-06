@@ -1,0 +1,93 @@
+.mcb-icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  padding: 0;
+  border: var(--mcb-border-width) solid var(--mcb-border-control);
+  border-radius: var(--mcb-radius-md);
+  background: var(--mcb-surface-raised);
+  color: var(--mcb-text);
+  font-family: var(--mcb-font-sans);
+  line-height: 1;
+  cursor: pointer;
+  transition: var(--mcb-transition-control);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.mcb-icon-btn--sm {
+  width: var(--mcb-control-height-sm);
+  height: var(--mcb-control-height-sm);
+  font-size: var(--mcb-font-size-xs);
+  border-radius: var(--mcb-radius-sm);
+}
+
+.mcb-icon-btn--md {
+  width: var(--mcb-control-height-md);
+  height: var(--mcb-control-height-md);
+  font-size: var(--mcb-font-size-sm);
+}
+
+.mcb-icon-btn--lg {
+  width: var(--mcb-control-height-lg);
+  height: var(--mcb-control-height-lg);
+  font-size: var(--mcb-font-size-md);
+}
+
+/* Tool grid cells: fill the column, keep the cell square. */
+.mcb-icon-btn--square {
+  width: auto;
+  aspect-ratio: 1;
+}
+
+.mcb-icon-btn--ghost {
+  background: transparent;
+  border-color: transparent;
+  color: var(--mcb-text-muted);
+}
+
+.mcb-icon-btn:hover:not(:disabled),
+.mcb-icon-btn.is-hover:not(:disabled) {
+  background: var(--mcb-surface-hover);
+  border-color: var(--mcb-border-strong);
+  color: var(--mcb-text);
+}
+
+.mcb-icon-btn:active:not(:disabled) {
+  background: var(--mcb-surface-sunken);
+}
+
+.mcb-icon-btn:focus-visible,
+.mcb-icon-btn.is-focus {
+  outline: var(--mcb-focus-ring-width) solid var(--mcb-focus-ring-color);
+  outline-offset: var(--mcb-focus-ring-offset);
+}
+
+.mcb-icon-btn:disabled {
+  opacity: var(--mcb-disabled-opacity);
+  cursor: not-allowed;
+}
+
+.mcb-icon-btn.is-active {
+  background: var(--mcb-accent-dim);
+  border-color: var(--mcb-accent);
+  color: var(--mcb-text-on-accent);
+}
+
+.mcb-icon-btn.is-active:hover:not(:disabled),
+.mcb-icon-btn.is-active.is-hover:not(:disabled) {
+  background: #2d4f74;
+  border-color: var(--mcb-accent-strong);
+}
+
+.mcb-icon-btn--danger:hover:not(:disabled),
+.mcb-icon-btn--danger.is-hover:not(:disabled) {
+  background: var(--mcb-danger-surface);
+  border-color: var(--mcb-danger);
+  color: var(--mcb-danger-text);
+}
+
+.mcb-icon-btn--danger:focus-visible,
+.mcb-icon-btn--danger.is-focus {
+  outline-color: var(--mcb-danger);
+}

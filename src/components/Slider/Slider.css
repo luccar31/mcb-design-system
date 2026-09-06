@@ -1,0 +1,99 @@
+.mcb-slider {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mcb-space-4);
+  min-width: 0;
+  font-family: var(--mcb-font-sans);
+}
+
+.mcb-slider__header {
+  display: flex;
+  align-items: baseline;
+  gap: var(--mcb-space-8);
+}
+
+.mcb-slider__label {
+  color: var(--mcb-text-muted);
+  font-size: var(--mcb-font-size-2xs);
+  font-weight: var(--mcb-font-weight-semibold);
+  letter-spacing: var(--mcb-tracking-wide);
+  text-transform: uppercase;
+}
+
+.mcb-slider__value {
+  margin-left: auto;
+  font-family: var(--mcb-font-mono);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--mcb-font-size-md);
+  font-weight: var(--mcb-font-weight-bold);
+  color: var(--mcb-text);
+  letter-spacing: var(--mcb-tracking-tight);
+}
+
+.mcb-slider__input {
+  width: 100%;
+  margin: 0;
+  height: var(--mcb-space-16);
+  background: transparent;
+  appearance: none;
+  cursor: pointer;
+}
+
+.mcb-slider__input:focus-visible,
+.mcb-slider__input.is-focus {
+  outline: var(--mcb-focus-ring-width) solid var(--mcb-focus-ring-color);
+  outline-offset: var(--mcb-focus-ring-offset);
+  border-radius: var(--mcb-radius-xs);
+}
+
+.mcb-slider__input::-webkit-slider-runnable-track {
+  height: 4px;
+  border-radius: var(--mcb-radius-pill);
+  background: var(--mcb-surface-sunken);
+  border: var(--mcb-border-width) solid var(--mcb-border-control);
+}
+
+.mcb-slider__input::-moz-range-track {
+  height: 4px;
+  border-radius: var(--mcb-radius-pill);
+  background: var(--mcb-surface-sunken);
+  border: var(--mcb-border-width) solid var(--mcb-border-control);
+}
+
+.mcb-slider__input::-webkit-slider-thumb {
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  margin-top: -6px;
+  border-radius: var(--mcb-radius-pill);
+  background: var(--mcb-accent);
+  border: var(--mcb-border-width) solid var(--mcb-bg);
+  box-shadow: var(--mcb-shadow-hud);
+}
+
+.mcb-slider__input::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: var(--mcb-radius-pill);
+  background: var(--mcb-accent);
+  border: var(--mcb-border-width) solid var(--mcb-bg);
+}
+
+.mcb-slider__input:disabled {
+  opacity: var(--mcb-disabled-opacity);
+  cursor: not-allowed;
+}
+
+.mcb-slider__footer {
+  display: flex;
+  align-items: center;
+  gap: var(--mcb-space-6);
+}
+
+.mcb-slider__range {
+  margin-left: auto;
+  color: var(--mcb-text-muted);
+  font-family: var(--mcb-font-mono);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--mcb-font-size-2xs);
+}

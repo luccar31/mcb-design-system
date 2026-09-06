@@ -1,0 +1,24 @@
+.mcb-color-swatch {
+  display: inline-block;
+  flex: none;
+  border-radius: var(--mcb-radius-xs);
+  /* An inset edge keeps pale blocks readable on the panel. */
+  box-shadow: var(--mcb-shadow-inset-edge);
+  vertical-align: -1px;
+}
+
+.mcb-color-swatch--xs {
+  width: 10px;
+  height: 10px;
+}
+
+.mcb-color-swatch--sm {
+  width: 13px;
+  height: 13px;
+}
+
+.mcb-color-swatch--md {
+  width: 18px;
+  height: 18px;
+  border-radius: var(--mcb-radius-sm);
+}

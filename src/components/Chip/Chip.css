@@ -1,0 +1,93 @@
+.mcb-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--mcb-space-4);
+  padding: 0 var(--mcb-space-8);
+  height: var(--mcb-control-height-sm);
+  border: var(--mcb-border-width) solid var(--mcb-border-control);
+  border-radius: var(--mcb-radius-pill);
+  background: var(--mcb-surface-raised);
+  color: var(--mcb-text-muted);
+  font-family: var(--mcb-font-sans);
+  font-size: var(--mcb-font-size-2xs);
+  font-weight: var(--mcb-font-weight-semibold);
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.mcb-chip--sm {
+  height: 20px;
+  padding: 0 var(--mcb-space-6);
+}
+
+.mcb-chip--accent {
+  color: var(--mcb-accent);
+  border-color: var(--mcb-accent-dim);
+}
+
+.mcb-chip--ok {
+  color: var(--mcb-ok);
+  border-color: var(--mcb-ok-border);
+}
+
+.mcb-chip--warn {
+  color: var(--mcb-warn-text);
+  background: var(--mcb-warn-surface);
+  border-color: transparent;
+}
+
+.mcb-chip--danger {
+  color: var(--mcb-danger-text);
+  background: var(--mcb-danger-surface);
+  border-color: transparent;
+}
+
+.mcb-chip__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: var(--mcb-radius-pill);
+  background: currentColor;
+  flex: none;
+}
+
+.mcb-chip__value {
+  font-family: var(--mcb-font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── toggle chip ─────────────────────────────────────────────────────── */
+
+.mcb-chip--button {
+  cursor: pointer;
+  transition: var(--mcb-transition-control);
+}
+
+.mcb-chip--button:hover:not(:disabled),
+.mcb-chip--button.is-hover:not(:disabled) {
+  background: var(--mcb-surface-hover);
+  border-color: var(--mcb-border-strong);
+  color: var(--mcb-text);
+}
+
+.mcb-chip--button:focus-visible,
+.mcb-chip--button.is-focus {
+  outline: var(--mcb-focus-ring-width) solid var(--mcb-focus-ring-color);
+  outline-offset: var(--mcb-focus-ring-offset);
+}
+
+.mcb-chip--button:disabled {
+  opacity: var(--mcb-disabled-opacity);
+  cursor: not-allowed;
+}
+
+.mcb-chip--button[aria-pressed='true'] {
+  background: var(--mcb-accent-dim);
+  border-color: var(--mcb-accent);
+  color: var(--mcb-text-on-accent);
+}
+
+.mcb-chip--button[aria-pressed='true']:hover:not(:disabled),
+.mcb-chip--button[aria-pressed='true'].is-hover:not(:disabled) {
+  background: #2d4f74;
+  border-color: var(--mcb-accent-strong);
+}

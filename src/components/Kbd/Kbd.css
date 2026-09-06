@@ -1,0 +1,21 @@
+.mcb-kbd {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.6em;
+  padding: 0 var(--mcb-space-4);
+  border: var(--mcb-border-width) solid var(--mcb-border-control);
+  border-bottom-width: var(--mcb-border-width-thick);
+  border-radius: var(--mcb-radius-xs);
+  background: var(--mcb-surface-sunken);
+  color: var(--mcb-text-muted);
+  font-family: var(--mcb-font-mono);
+  font-size: var(--mcb-font-size-2xs);
+  line-height: 1.6;
+  white-space: nowrap;
+}
+
+.mcb-kbd--emphasis {
+  color: var(--mcb-text);
+  border-color: var(--mcb-border-strong);
+}

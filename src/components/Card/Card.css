@@ -1,0 +1,50 @@
+.mcb-card {
+  display: block;
+  min-width: 0;
+  background: var(--mcb-surface-raised);
+  border: var(--mcb-border-width) solid var(--mcb-border);
+  border-radius: var(--mcb-radius-md);
+  color: var(--mcb-text);
+  font-family: var(--mcb-font-sans);
+  font-size: var(--mcb-font-size-sm);
+  line-height: var(--mcb-leading-normal);
+}
+
+.mcb-card--pad-tight {
+  padding: var(--mcb-space-6);
+}
+
+.mcb-card--pad-normal {
+  padding: var(--mcb-space-8) var(--mcb-space-10);
+}
+
+.mcb-card--pad-loose {
+  padding: var(--mcb-space-12) var(--mcb-space-16);
+}
+
+.mcb-card--pad-none {
+  padding: 0;
+}
+
+.mcb-card--interactive {
+  cursor: pointer;
+  text-align: left;
+  width: 100%;
+  transition: var(--mcb-transition-control);
+}
+
+.mcb-card--interactive:hover,
+.mcb-card--interactive.is-hover {
+  border-color: var(--mcb-border-strong);
+  background: var(--mcb-surface-hover);
+}
+
+.mcb-card--interactive:focus-visible,
+.mcb-card--interactive.is-focus {
+  outline: var(--mcb-focus-ring-width) solid var(--mcb-focus-ring-color);
+  outline-offset: var(--mcb-focus-ring-offset);
+}
+
+.mcb-card--selected {
+  border-color: var(--mcb-accent);
+}

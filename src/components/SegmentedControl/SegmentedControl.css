@@ -1,0 +1,86 @@
+.mcb-segmented {
+  display: flex;
+  gap: var(--mcb-space-4);
+  align-items: center;
+  min-width: 0;
+}
+
+.mcb-segmented--wrap {
+  flex-wrap: wrap;
+}
+
+.mcb-segmented__item {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--mcb-space-4);
+  min-width: 0;
+  border: var(--mcb-border-width) solid var(--mcb-border-control);
+  border-radius: var(--mcb-radius-md);
+  background: var(--mcb-surface-raised);
+  color: var(--mcb-text-muted);
+  font-family: var(--mcb-font-sans);
+  font-weight: var(--mcb-font-weight-semibold);
+  line-height: var(--mcb-leading-tight);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: var(--mcb-transition-control);
+}
+
+.mcb-segmented--stretch .mcb-segmented__item {
+  flex: 1 1 0;
+}
+
+.mcb-segmented--sm .mcb-segmented__item {
+  height: var(--mcb-control-height-sm);
+  padding: 0 var(--mcb-space-8);
+  font-size: var(--mcb-font-size-2xs);
+  border-radius: var(--mcb-radius-sm);
+}
+
+.mcb-segmented--md .mcb-segmented__item {
+  height: var(--mcb-control-height-md);
+  padding: 0 var(--mcb-space-10);
+  font-size: var(--mcb-font-size-xs);
+}
+
+.mcb-segmented--lg .mcb-segmented__item {
+  height: var(--mcb-control-height-lg);
+  padding: 0 var(--mcb-space-12);
+  font-size: var(--mcb-font-size-sm);
+}
+
+.mcb-segmented__item:hover:not(:disabled),
+.mcb-segmented__item.is-hover:not(:disabled) {
+  background: var(--mcb-surface-hover);
+  border-color: var(--mcb-border-strong);
+  color: var(--mcb-text);
+}
+
+.mcb-segmented__item:focus-visible,
+.mcb-segmented__item.is-focus {
+  outline: var(--mcb-focus-ring-width) solid var(--mcb-focus-ring-color);
+  outline-offset: var(--mcb-focus-ring-offset);
+}
+
+.mcb-segmented__item:disabled {
+  opacity: var(--mcb-disabled-opacity);
+  cursor: not-allowed;
+}
+
+.mcb-segmented__item[aria-checked='true'] {
+  background: var(--mcb-accent-dim);
+  border-color: var(--mcb-accent);
+  color: var(--mcb-text-on-accent);
+}
+
+.mcb-segmented__item[aria-checked='true']:hover:not(:disabled),
+.mcb-segmented__item[aria-checked='true'].is-hover:not(:disabled) {
+  background: #2d4f74;
+  border-color: var(--mcb-accent-strong);
+}
+
+.mcb-segmented__label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

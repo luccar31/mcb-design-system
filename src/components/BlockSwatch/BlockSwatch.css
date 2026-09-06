@@ -1,0 +1,73 @@
+.mcb-block-swatch {
+  position: relative;
+  display: block;
+  padding: 0;
+  aspect-ratio: 1;
+  overflow: hidden;
+  border: var(--mcb-border-width) solid var(--mcb-border-control);
+  border-radius: var(--mcb-radius-sm);
+  background: var(--mcb-surface-sunken);
+  transition: var(--mcb-transition-control);
+}
+
+.mcb-block-swatch--sm {
+  width: 24px;
+}
+
+.mcb-block-swatch--md {
+  width: 32px;
+}
+
+.mcb-block-swatch--lg {
+  width: 44px;
+  border-radius: var(--mcb-radius-md);
+}
+
+.mcb-block-swatch--fill {
+  width: 100%;
+}
+
+.mcb-block-swatch__image,
+.mcb-block-swatch__fallback {
+  display: block;
+  width: 100%;
+  height: 100%;
+  /* Minecraft textures are 16px; never let the browser smooth them. */
+  image-rendering: pixelated;
+}
+
+.mcb-block-swatch--button {
+  cursor: pointer;
+}
+
+.mcb-block-swatch--button:hover:not(:disabled),
+.mcb-block-swatch--button.is-hover:not(:disabled) {
+  border-color: var(--mcb-border-strong);
+}
+
+.mcb-block-swatch--button:focus-visible,
+.mcb-block-swatch--button.is-focus {
+  outline: var(--mcb-focus-ring-width) solid var(--mcb-focus-ring-color);
+  outline-offset: var(--mcb-focus-ring-offset);
+}
+
+.mcb-block-swatch--button:disabled {
+  opacity: var(--mcb-disabled-opacity);
+  cursor: not-allowed;
+}
+
+/* Selection is drawn inside the tile, so the grid never reflows. */
+.mcb-block-swatch[aria-pressed='true'],
+.mcb-block-swatch.is-selected {
+  border-color: var(--mcb-accent);
+}
+
+.mcb-block-swatch[aria-pressed='true']::after,
+.mcb-block-swatch.is-selected::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: var(--mcb-border-width-thick) solid var(--mcb-accent);
+  border-radius: inherit;
+  pointer-events: none;
+}

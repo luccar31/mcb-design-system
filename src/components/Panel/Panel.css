@@ -1,0 +1,99 @@
+.mcb-panel {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  background: var(--mcb-surface);
+  border: var(--mcb-border-width) solid var(--mcb-border);
+  border-radius: var(--mcb-radius-lg);
+  color: var(--mcb-text);
+  font-family: var(--mcb-font-sans);
+  font-size: var(--mcb-font-size-sm);
+  line-height: var(--mcb-leading-normal);
+}
+
+.mcb-panel--raised {
+  box-shadow: var(--mcb-shadow-panel);
+}
+
+/* A full-height column: square on the inside edge, only one visible border. */
+.mcb-panel--edge-left,
+.mcb-panel--edge-right {
+  border-radius: 0;
+  border-width: 0;
+}
+
+.mcb-panel--edge-left {
+  border-right-width: var(--mcb-border-width);
+}
+
+.mcb-panel--edge-right {
+  border-left-width: var(--mcb-border-width);
+}
+
+.mcb-panel__header {
+  display: flex;
+  align-items: center;
+  gap: var(--mcb-space-8);
+  flex-wrap: wrap;
+  flex: none;
+  padding: var(--mcb-space-8) var(--mcb-space-10);
+  border-bottom: var(--mcb-border-width) solid var(--mcb-border);
+}
+
+.mcb-panel__title {
+  margin: 0;
+  font-size: var(--mcb-font-size-sm);
+  font-weight: var(--mcb-font-weight-bold);
+  letter-spacing: var(--mcb-tracking-tight);
+}
+
+.mcb-panel__header-actions {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: var(--mcb-space-6);
+}
+
+.mcb-panel__body {
+  min-height: 0;
+  padding: var(--mcb-space-10);
+}
+
+.mcb-panel--scroll .mcb-panel__body {
+  overflow-y: auto;
+  flex: 1;
+  overscroll-behavior: contain;
+}
+
+.mcb-panel__footer {
+  flex: none;
+  padding: var(--mcb-space-6) var(--mcb-space-10);
+  border-top: var(--mcb-border-width) solid var(--mcb-border);
+}
+
+/* ── section ─────────────────────────────────────────────────────────── */
+
+.mcb-section + .mcb-section {
+  margin-top: var(--mcb-space-16);
+}
+
+.mcb-section__title {
+  margin: 0 0 var(--mcb-space-6);
+  color: var(--mcb-text-muted);
+  font-size: var(--mcb-font-size-2xs);
+  font-weight: var(--mcb-font-weight-semibold);
+  letter-spacing: var(--mcb-tracking-wide);
+  text-transform: uppercase;
+  display: flex;
+  align-items: baseline;
+  gap: var(--mcb-space-6);
+}
+
+.mcb-section__count {
+  font-family: var(--mcb-font-mono);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0;
+  color: var(--mcb-text-faint);
+  text-transform: none;
+}

@@ -1,0 +1,77 @@
+.mcb-hud {
+  position: absolute;
+  z-index: var(--mcb-z-hud);
+  display: flex;
+  align-items: center;
+  gap: var(--mcb-space-6);
+}
+
+.mcb-hud--bottom-right {
+  right: var(--mcb-space-12);
+  bottom: var(--mcb-space-12);
+}
+
+.mcb-hud--bottom-left {
+  left: var(--mcb-space-10);
+  bottom: var(--mcb-space-10);
+}
+
+.mcb-hud--top-right {
+  right: var(--mcb-space-12);
+  top: var(--mcb-space-12);
+}
+
+.mcb-hud--top-left {
+  left: var(--mcb-space-12);
+  top: var(--mcb-space-12);
+}
+
+/* Glass so the build stays visible underneath, shadow so it stays legible. */
+.mcb-hud--glass > * {
+  background: var(--mcb-surface-hud);
+  backdrop-filter: blur(6px);
+  box-shadow: var(--mcb-shadow-hud);
+}
+
+.mcb-hud-readout {
+  position: absolute;
+  z-index: var(--mcb-z-hud);
+  left: var(--mcb-space-10);
+  bottom: var(--mcb-space-10);
+  padding: var(--mcb-space-2) var(--mcb-space-8);
+  border: var(--mcb-border-width) solid var(--mcb-border-control);
+  border-radius: var(--mcb-radius-sm);
+  background: var(--mcb-surface-hud);
+  backdrop-filter: blur(6px);
+  box-shadow: var(--mcb-shadow-hud);
+  color: var(--mcb-text-muted);
+  font-family: var(--mcb-font-mono);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--mcb-font-size-2xs);
+  line-height: var(--mcb-leading-normal);
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.mcb-hud-readout__key {
+  color: var(--mcb-text-faint);
+}
+
+.mcb-hud-readout__value {
+  color: var(--mcb-text);
+}
+
+/* The viewport frame that tells build mode from navigate mode. */
+.mcb-viewport-mode {
+  position: absolute;
+  inset: 0;
+  z-index: var(--mcb-z-viewport-overlay);
+  pointer-events: none;
+  border: var(--mcb-border-width-thick) solid transparent;
+  border-radius: var(--mcb-radius-xs);
+}
+
+.mcb-viewport-mode--navigate {
+  border-color: var(--mcb-accent);
+  opacity: 0.55;
+}
