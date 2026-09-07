@@ -9,3 +9,4 @@ storybook-static/
 .ds-sync/
 ds-bundle/
 .design-sync/.upload-list.json
+mcb-design-system-*.tgz

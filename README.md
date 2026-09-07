@@ -9,8 +9,9 @@ No es un kit genérico. La paleta, las alturas de control y la densidad salieron
 `src/styles.css` de la app, no de un tema de plantilla. Lo que se cambió respecto de la app
 está documentado, punto por punto y con su costo, en [`docs/audit.md`](docs/audit.md).
 
-- **21 familias de componentes**, 34 exports, cada una con sus historias por variante y por
-  estado.
+- **21 familias de componentes**, cada una con sus historias por variante y por estado.
+  En total el paquete expone **48 exports de valor**: 34 componentes y piezas de
+  composición, más 14 objetos de tokens tipados.
 - **97 custom properties** en `src/tokens/tokens.css`, con un espejo tipado en
   `src/tokens/tokens.ts` para lo que tiene que llegar a JavaScript (three.js, `<canvas>`,
   SVG).
@@ -21,59 +22,35 @@ está documentado, punto por punto y con su costo, en [`docs/audit.md`](docs/aud
 
 ## Instalación
 
-Requiere Node 24 y React 18 o 19 (`react` y `react-dom` son peer dependencies).
+Se instala como cualquier otra librería. `react` y `react-dom` son peer dependencies
+(18 o 19); el paquete no arrastra dependencias propias.
 
 ```bash
-npm install
+npm install @mcb/design-system          # cuando esté publicado en el registry
+npm install github:luccar31/mcb-design-system   # desde el repo, sin registry
 ```
 
-El paquete todavía no se publica.
+Las dos formas funcionan sin configuración extra en el consumidor: nada de alias, nada de
+`paths` en el tsconfig. El mapa `exports` resuelve el entrypoint, los tipos y las hojas
+de estilo por subpath.
 
-### Consumirlo sin instalar nada
+`dist/` no se versiona, así que el script `prepare` lo construye solo — al instalar desde
+git, al empaquetar y al publicar. Un clon sin `dist/` no es un paquete roto: se arma al
+instalarlo.
 
-`dist/` es autocontenido: sus únicos imports externos son `react` y `react/jsx-runtime`,
-que el consumidor ya tiene. No arrastra dependencias propias. Por eso **no hace falta
-instalarlo** — alcanza con apuntar el bundler y el typechecker a la carpeta construida.
-
-Esto no es una comodidad: MC Blueprint comparte su `node_modules` por junction entre
-worktrees y tiene prohibido correr `npm install`, así que un `file:` o un workspace link
-no son opciones ahí.
+### Desarrollo local del propio sistema
 
 ```bash
-npm run build          # deja dist/ listo — hacelo en ESTE repo
+npm install     # corre prepare y deja dist/ listo
+npm run dev     # Storybook en el 6006
 ```
 
-En el repo consumidor, dos archivos:
+Para probar el paquete tal como lo recibe un consumidor, sin publicar nada:
 
-```ts
-// vite.config.ts
-resolve: {
-  alias: {
-    '@mcb/design-system': '../../../mcb-design-system/dist/index.js',
-    '@mcb/design-system/styles.css': '../../../mcb-design-system/dist/mcb-design-system.css',
-    '@mcb/design-system/tokens.css': '../../../mcb-design-system/dist/tokens.css',
-  },
-},
-// Vite bloquea por defecto lo que está fuera de la raíz del proyecto.
-server: { fs: { allow: ['..', '../../../mcb-design-system'] } },
+```bash
+npm pack                                   # deja mcb-design-system-<version>.tgz
+npm install ../mcb-design-system/mcb-design-system-0.1.0.tgz   # desde el consumidor
 ```
-
-```jsonc
-// tsconfig.json
-"compilerOptions": {
-  "baseUrl": ".",
-  "paths": { "@mcb/design-system": ["../../../mcb-design-system/dist/index.d.ts"] }
-}
-```
-
-La ruta relativa depende de dónde esté cada repo; la de arriba es la de MC Blueprint
-(`.../OneDrive/Desktop/minecraft-3d-designer` → `C:/Users/lucas/mcb-design-system`).
-
-`react` y `react-dom` quedan externos en el bundle, así que se resuelven contra los del
-consumidor: no hay dos Reacts.
-
-**Cuando este repo publique de verdad, todo esto se borra y vuelve a ser un `dependencies`
-normal.** Es un puente, no una arquitectura.
 
 ## Uso
 
