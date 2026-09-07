@@ -4,18 +4,35 @@ Gotchas específicos de este repo. Leelo antes de cualquier re-sync.
 
 ## Entorno (Windows)
 
-- **Node no está en el PATH de la sesión.** Está instalado con nvm-windows en
-  `C:\Users\lucas\AppData\Local\nvm\v24.20.0` (v24.20.0, npm 11.19.0). Todo comando
-  necesita `export PATH="/c/Users/lucas/AppData/Local/nvm/v24.20.0:$PATH"` primero,
-  o falla con `node: command not found` / `tsc no se reconoce`.
-- **`npm ci` falla con EPERM y rompe `node_modules`.** Procesos `esbuild.exe`
-  huérfanos de sesiones previas de Vite/Storybook mantienen abierto
-  `node_modules/@esbuild/win32-x64/esbuild.exe`; `npm ci` borra el árbol y después
-  muere al no poder unlinkear ese binario, dejando `node_modules` a medias (sin
-  `.bin`, sin react ni typescript). **Usar `npm install`**, que se recupera sin
-  tocar procesos. Si hiciera falta `npm ci`, cerrar antes los procesos esbuild/node
-  huérfanos.
+- **Node no está en el PATH de la sesión.** Todo comando necesita anteponerlo o falla
+  con `node: command not found` / `tsc no se reconoce`:
+
+  ```sh
+  export PATH="/c/nvm4w/nodejs:$PATH"
+  ```
+
+  **Usá esa ruta, no la del directorio de versión.** `C:\nvm4w\nodejs` es un *symlink*
+  que nvm-windows repunta al hacer `nvm use`, así que sobrevive a un cambio de versión;
+  `C:\Users\lucas\AppData\Local\nvm\v24.20.0` es el destino de hoy y se rompe cuando
+  esa versión cambie. (En una pasada anterior de este sync se dio por inexistente la
+  ruta del symlink porque una búsqueda recursiva no lo siguió: existe y funciona.)
+  Hoy resuelve a Node v24.20.0.
+- **El repo usa pnpm** (`packageManager: pnpm@12.3.4`, bajado por corepack). Si el comando
+  no existe: `corepack enable pnpm` una vez, o usar `corepack pnpm ...` que anda siempre.
+  `pnpm install` en un árbol sin `allowBuilds` sale con exit 1 (`ERR_PNPM_IGNORED_BUILDS`,
+  por las dos versiones de esbuild); se destraba con `pnpm approve-builds --all`. Ese
+  archivo (`pnpm-workspace.yaml`) está commiteado, así que un clon limpio no debería verlo.
+- **Histórico, ya no aplica:** con npm, `npm ci` fallaba con EPERM y dejaba `node_modules`
+  a medias — procesos `esbuild.exe` huérfanos de sesiones de Vite/Storybook mantenían
+  abierto el binario y `npm ci`, que borra el árbol antes de reinstalar, moría sin poder
+  unlinkearlo. Se salía con `npm install`. pnpm no reconstruye el árbol de esa forma, así
+  que el modo de falla desaparece; queda anotado por si alguien vuelve a npm.
 - Chromium de Playwright ya está en caché (`~/AppData/Local/ms-playwright/chromium-1243`).
+- **El conversor sigue andando con pnpm.** Se le pasa `--node-modules ./node_modules` y
+  necesita encontrar `react` y `react-dom` ahí: bajo el layout estricto sólo se ven las
+  dependencias **directas**, y las dos lo son, así que resuelven (verificado: 18.3.1).
+  Si alguna vez dejaran de ser directas, habría que apuntar el flag al store de pnpm.
+  `.ds-sync/` tiene su propio `node_modules` instalado con npm y es ajeno a esto.
 
 ## Forma del design system
 

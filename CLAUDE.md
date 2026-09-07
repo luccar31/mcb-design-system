@@ -10,20 +10,26 @@ Extraído de la app, no inventado: `docs/audit.md` documenta qué había, qué s
 
 ```bash
 export PATH="/c/nvm4w/nodejs:$PATH"   # node NO está en el PATH
-npm run dev              # Storybook en el 6006
-npm run typecheck
-npm run build            # tsc + vite en modo librería → dist/
-npm run build-storybook
-npm run shots            # capturas a docs/screenshots/
+pnpm dev              # Storybook en el 6006
+pnpm typecheck
+pnpm build            # tsc + vite en modo librería → dist/
+pnpm build-storybook
+pnpm shots            # capturas a docs/screenshots/
 ```
 
-`npm install` acá es seguro: este repo tiene su propio `node_modules`, sin junctions. **No es el caso del repo de la app** — ahí está prohibido.
+El gestor es **pnpm**, fijado en `packageManager` y bajado por corepack. Si el comando `pnpm` no existe, falta `corepack enable pnpm` una vez en la máquina; `corepack pnpm ...` funciona siempre.
+
+`pnpm install` acá es seguro: este repo tiene su propio `node_modules`, sin junctions. **No es el caso del repo de la app** — ahí está prohibido instalar.
 
 ## Trampas
 
-**`build-storybook` sobre un árbol limpio.** `vite-plugin-dts` con `rollupTypes: true` comparte `vite.config.ts` y también corre en el build de Storybook, donde explota pidiendo `dist/index.d.ts`. Sólo andaba si antes habías corrido `npm run build` — o sea, el bug se escondía en el flujo normal. Los plugins de empaquetado llevan `apply: (config) => Boolean(config.build?.lib)`. **Si tocás `vite.config.ts`, probá los dos builds desde `rm -rf dist storybook-static`.**
+**pnpm bloquea los build scripts.** Un `pnpm install` en un árbol sin `allowBuilds` sale con **exit 1** (`ERR_PNPM_IGNORED_BUILDS`, por esbuild — acá hay dos versiones, 0.21.5 y 0.25.12) y deja esbuild sin su binario de plataforma. Se destraba con `pnpm approve-builds --all`, que escribe `pnpm-workspace.yaml`; ese archivo está commiteado, así que en un clon limpio no debería aparecer. Dos settings que parecen los correctos **no funcionan** en pnpm 12: el campo `pnpm` en `package.json` ya no se lee, y `onlyBuiltDependencies` en `pnpm-workspace.yaml` figura en `pnpm config list` pero no surte efecto. El que sirve es `allowBuilds`.
 
-**`.mcb-root` es una clase, no un provider.** Es el wrapper raíz: sin esa clase en un ancestro, los componentes renderizan sin estilo y **no tiran error**. El decorador `.sb-canvas` de Storybook es un sustituto sólo para las historias, así que algo puede verse bien acá y salir gris en un consumidor. Es la divergencia más peligrosa del repo.
+**No uses `shamefully-hoist`.** El layout estricto es lo que impide que este paquete dependa sin darse cuenta de algo que no declaró — y una dependencia fantasma acá no se rompe en este repo, se rompe en el consumidor. La raíz de `node_modules` tiene 10 entradas contra las ~320 planas de npm: eso es la red de seguridad, no un inconveniente. Si aparece una fantasma, **declará la dependencia**.
+
+**`build-storybook` sobre un árbol limpio.** `vite-plugin-dts` con `rollupTypes: true` comparte `vite.config.ts` y también corre en el build de Storybook, donde explota pidiendo `dist/index.d.ts`. Sólo andaba si antes habías corrido `pnpm build` — o sea, el bug se escondía en el flujo normal. Los plugins de empaquetado llevan `apply: (config) => Boolean(config.build?.lib)`. **Si tocás `vite.config.ts`, probá los dos builds desde `rm -rf dist storybook-static`.**
+
+**`.mcb-root` es una clase, no un provider.** Es el wrapper raíz, y sin esa clase en un ancestro el fallo es **parcial y engañoso** — no "sin estilo". Medido sobre los 21 componentes fuera de `.mcb-root`, en fondo claro: los que traen superficie propia (`Card`, `Panel`, `Callout`, `DataTable`, `Modal`) se ven bien, y eso es justamente lo que engaña; los que heredan el color del contenedor (`EmptyState`, `Kbd`, `Select`, `ColorSwatch`, `ListRow`) quedan con texto casi blanco sobre blanco, ilegibles y **sin tirar error**. El modelo de caja sí viaja con cada componente; lo que falta es fondo, color y tipografía del documento. El decorador `.sb-canvas` de Storybook es un sustituto sólo para las historias, así que algo puede verse bien acá y salir mal en un consumidor. Es la divergencia más peligrosa del repo.
 
 **`box-sizing` fuera del bloque opt-in.** `TextField` y `Select` traen `fullWidth` por defecto. Cuando `box-sizing: border-box` vivía sólo dentro de `.mcb-root *`, los dos se desbordaban de su contenedor en cualquier consumidor sin esa clase — medido: contenedor 121 px, input 143 px. La regla ahora está acotada al prefijo propio y fuera del bloque opt-in. No la muevas adentro.
 

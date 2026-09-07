@@ -38,17 +38,29 @@ de estilo por subpath.
 git, al empaquetar y al publicar. Un clon sin `dist/` no es un paquete roto: se arma al
 instalarlo.
 
+Del lado del consumidor el gestor de paquetes es indistinto: npm, pnpm o yarn resuelven
+igual contra el mapa `exports`.
+
 ### Desarrollo local del propio sistema
 
+Este repo usa **pnpm**, fijado con `packageManager` en `package.json`. La versión la baja
+corepack sola.
+
 ```bash
-npm install     # corre prepare y deja dist/ listo
-npm run dev     # Storybook en el 6006
+corepack enable pnpm   # una vez por máquina; si no, el comando pnpm no existe
+pnpm install           # corre prepare y deja dist/ listo
+pnpm dev               # Storybook en el 6006
 ```
+
+Si `pnpm install` sale con `ERR_PNPM_IGNORED_BUILDS`, es esbuild: pnpm bloquea los build
+scripts por defecto. Se destraba una vez con `pnpm approve-builds --all`, que escribe
+`allowBuilds` en `pnpm-workspace.yaml` (ya commiteado, así que no debería pasar en un clon
+limpio).
 
 Para probar el paquete tal como lo recibe un consumidor, sin publicar nada:
 
 ```bash
-npm pack                                   # deja mcb-design-system-<version>.tgz
+pnpm pack                                                      # deja el .tgz
 npm install ../mcb-design-system/mcb-design-system-0.1.0.tgz   # desde el consumidor
 ```
 
@@ -126,8 +138,8 @@ Storybook es la documentación: cada componente tiene una historia por variante 
 estado, incluidos hover y foco.
 
 ```bash
-npm run dev              # http://localhost:6006
-npm run build-storybook  # sitio estático en storybook-static/
+pnpm dev              # http://localhost:6006
+pnpm build-storybook  # sitio estático en storybook-static/
 ```
 
 Empezá por **Fundamentos**: Color, Espaciado, Tipografía, Radios y sombras, y Contraste.
@@ -141,11 +153,11 @@ la app.
 
 | Comando | Qué hace |
 | --- | --- |
-| `npm run dev` | Storybook en el puerto 6006 |
-| `npm run build` | Chequea tipos y compila `dist/` (ESM, CJS, `.d.ts`, CSS) |
-| `npm run build-storybook` | Storybook estático en `storybook-static/` |
-| `npm run typecheck` | `tsc --noEmit` sobre `src`, `.storybook` y `scripts` |
-| `npm run shots` | Rehace `docs/screenshots/` |
+| `pnpm dev` | Storybook en el puerto 6006 |
+| `pnpm build` | Chequea tipos y compila `dist/` (ESM, CJS, `.d.ts`, CSS) |
+| `pnpm build-storybook` | Storybook estático en `storybook-static/` |
+| `pnpm typecheck` | `tsc --noEmit` sobre `src`, `.storybook` y `scripts` |
+| `pnpm shots` | Rehace `docs/screenshots/` |
 
 `shots` necesita los dos servidores levantados y no levanta ninguno: Storybook en el 6006 y
 la app en el 5180. Se le puede pasar `app` o `stories` para hacer una mitad sola, y
